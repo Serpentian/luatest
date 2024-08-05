@@ -82,6 +82,11 @@ end
 
 box.cfg(box_cfg())
 
+local run_after_box_cfg = os.getenv('TARANTOOL_RUN_AFTER_BOX_CFG')
+if run_after_box_cfg then
+    loadstring(run_after_box_cfg)()
+end
+
 box.schema.user.grant('guest', 'super', nil, nil, {if_not_exists = true})
 
 -- server:wait_until_ready() unblocks only when this variable becomes `true`.
